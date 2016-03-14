@@ -796,6 +796,10 @@ class OpenIDConnectClient
         return $this->accessToken;
     }
 
+    public function getAccessTokenPayload(){
+        return $this->decodeJWT($this->getAccessToken(), 1);
+    }    
+
     /**
      * @return string
      */
