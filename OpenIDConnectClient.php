@@ -754,6 +754,17 @@ class OpenIDConnectClient
 
     }
 
+    public function validateAccesToken(){
+        $accessTokenPayload = $this->decodeJWT($this->accessToken, 1);
+        $exp = $accessTokenPayload->exp;
+        $currentTimestamp = date_timestamp_get(date_create());
+        $isExpiredToken =  $currentTimestamp > $exp;
+
+        if($isExpiredToken){
+            $this->accessToken = $this->refreshToken($this->refreshToken);
+        }
+    }
+
     /**
      * @return mixed
      */
